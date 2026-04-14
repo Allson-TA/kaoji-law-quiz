@@ -225,10 +225,280 @@
     header h1 { font-size: 1.3rem; }
     .container { padding: 1rem 0.5rem; }
     .question-header { flex-direction: column; }
+    .print-toolbar { flex-direction: column; }
+    .student-name-input { width: 100%; }
+    .print-btn { width: 100%; }
+  }
+
+  /* ==================== 工具列 ==================== */
+  .print-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 2px solid var(--primary);
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .print-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.55rem 1rem;
+    font-size: 0.88rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+    font-family: inherit;
+  }
+  .print-btn:hover { background: var(--primary-light); }
+  .print-btn.review { background: #27ae60; }
+  .print-btn.review:hover { background: #1e8449; }
+  .print-btn.danger { background: var(--accent); }
+  .print-btn.danger:hover { background: #c0392b; }
+  .student-name-input {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    min-width: 160px;
+  }
+
+  /* ==================== 學生答案區 ==================== */
+  .student-answer-wrap {
+    padding: 1rem 1.2rem;
+    background: #fffbea;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .student-answer-label {
+    font-size: 0.92rem;
+    font-weight: bold;
+    color: #7d6608;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .student-answer {
+    width: 100%;
+    min-height: 150px;
+    padding: 0.8rem 1rem;
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+    background: white;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    font-family: inherit;
+    outline: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .student-answer:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(41,128,185,0.15);
+  }
+  .student-answer:empty::before {
+    content: attr(data-placeholder);
+    color: #b0b0b0;
+    font-style: italic;
+  }
+  .save-status {
+    font-size: 0.8rem;
+    color: #27ae60;
+    font-weight: normal;
+    min-height: 1em;
+  }
+
+  /* ==================== PDF 列印專用 ==================== */
+  .print-header-info {
+    display: none;
+  }
+
+  @media print {
+    body {
+      background: white;
+      color: black;
+      font-size: 11pt;
+      line-height: 1.7;
+    }
+    header, .info-box, .toc, .theme-title, .toggle-icon,
+    .print-toolbar, footer, .save-status {
+      display: none !important;
+    }
+    .container {
+      padding: 0;
+      max-width: none;
+    }
+    .theme-section {
+      margin-bottom: 0;
+    }
+
+    .print-header-info {
+      display: block !important;
+      text-align: center;
+      margin-bottom: 15pt;
+      padding-bottom: 10pt;
+      border-bottom: 2px solid #000;
+    }
+    .print-header-info h1 {
+      font-size: 16pt;
+      margin: 0 0 6pt;
+      color: black;
+    }
+    .print-header-info .meta {
+      font-size: 10pt;
+      color: #333;
+    }
+    .print-header-info .meta span {
+      margin: 0 8pt;
+    }
+
+    .question-card {
+      border: none !important;
+      page-break-inside: auto;
+      break-inside: auto;
+      margin-bottom: 18pt;
+      padding-bottom: 12pt;
+      border-bottom: 1px dashed #999 !important;
+      border-radius: 0 !important;
+      background: white !important;
+    }
+    .question-card:last-child {
+      border-bottom: none !important;
+    }
+    .question-header {
+      padding: 0 0 6pt !important;
+      cursor: default;
+      background: white !important;
+      border: none !important;
+    }
+    .question-header .tags {
+      margin-left: 0;
+    }
+    .question-header .tag {
+      background: white !important;
+      color: #333 !important;
+      border: 1px solid #666;
+      font-size: 8pt;
+      padding: 1pt 5pt;
+    }
+    .q-number {
+      background: #000 !important;
+      color: white !important;
+      font-size: 11pt;
+      padding: 2pt 8pt;
+      display: inline-block;
+      margin-right: 6pt;
+    }
+    .q-text {
+      font-size: 12pt;
+      font-weight: bold;
+    }
+
+    .question-body {
+      padding: 6pt 0 !important;
+      background: white !important;
+      border: none !important;
+    }
+    .source-info {
+      background: #f5f5f5 !important;
+      border-left: 2px solid #666 !important;
+      font-size: 9pt;
+      padding: 4pt 8pt;
+      margin-bottom: 6pt;
+    }
+
+    .student-answer-wrap {
+      background: white !important;
+      padding: 8pt 0 !important;
+      border: none !important;
+      page-break-inside: avoid;
+    }
+    .student-answer-label {
+      color: #333 !important;
+      font-size: 10pt;
+      margin-bottom: 4pt;
+    }
+    .student-answer {
+      border: 1px solid #666 !important;
+      min-height: 150pt;
+      padding: 8pt 10pt !important;
+      background: white !important;
+      font-size: 11pt;
+      line-height: 2;
+    }
+    .student-answer:empty::before {
+      content: "";
+    }
+
+    body.mode-practice .answer-section {
+      display: none !important;
+    }
+    body.mode-review .answer-section {
+      display: block !important;
+      background: #fafafa !important;
+      border: 1px solid #ccc !important;
+      border-radius: 0 !important;
+      padding: 10pt 14pt !important;
+      margin-top: 8pt;
+    }
+    body.mode-review .answer-section h4 {
+      color: #000 !important;
+      font-size: 12pt;
+      border-bottom: 1px solid #666 !important;
+      padding-bottom: 4pt;
+    }
+    body.mode-review .answer-section h5 {
+      color: #000 !important;
+      font-size: 11pt;
+      margin-top: 8pt;
+    }
+    body.mode-review .answer-section table {
+      font-size: 9.5pt !important;
+    }
+    body.mode-review .answer-section table th {
+      background: #e8e8e8 !important;
+    }
+    .draft-note {
+      background: #f8f8f8 !important;
+      color: #666 !important;
+      font-size: 9pt;
+      border: 1px solid #ccc !important;
+    }
+
+    @page {
+      size: A4;
+      margin: 15mm 15mm 18mm 15mm;
+    }
   }
 </style>
 </head>
 <body>
+
+<!-- 列印用頁首（只在列印時顯示） -->
+<div class="print-header-info">
+  <h1>公務人員考績法修法 申論題題庫</h1>
+  <p class="meta">
+    <span id="printHeaderStudent"></span>
+    <span id="printHeaderMode"></span>
+    <span id="printHeaderDate"></span>
+  </p>
+</div>
+
+<!-- 工具列 -->
+<div class="print-toolbar">
+  <input type="text" class="student-name-input" id="studentName" placeholder="姓名（選填）" autocomplete="off">
+  <button class="print-btn" onclick="printPDF('practice')">📥 下載：題目＋我的答案</button>
+  <button class="print-btn review" onclick="printPDF('review')">📥 下載：題目＋答案＋範答</button>
+  <button class="print-btn danger" onclick="clearAllAnswers()">🗑️ 清空所有答案</button>
+</div>
 
 <header>
   <h1>公務人員考績法修法 申論題題庫</h1>
@@ -1852,6 +2122,7 @@
 </footer>
 
 <script>
+// ==================== 展開/收合 ====================
 function toggleAnswer(header) {
   const card = header.closest('.question-card');
   card.classList.toggle('open');
@@ -1868,6 +2139,124 @@ document.querySelectorAll('.toc a').forEach(link => {
       targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
+});
+
+// ==================== 學生答案輸入區 ====================
+const STORAGE_KEY = 'kaoji_quiz_answers_v1';
+const NAME_KEY = 'kaoji_quiz_student_name';
+
+function debounce(fn, wait) {
+  let t;
+  return function() {
+    clearTimeout(t);
+    const args = arguments, ctx = this;
+    t = setTimeout(() => fn.apply(ctx, args), wait);
+  };
+}
+
+function saveAnswer(qid, text) {
+  const answers = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  answers[qid] = text;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+}
+
+function loadAnswers() {
+  const answers = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  document.querySelectorAll('.student-answer').forEach(el => {
+    const qid = el.dataset.qid;
+    if (answers[qid]) el.textContent = answers[qid];
+  });
+}
+
+function clearAllAnswers() {
+  if (!confirm('確定要清空所有題目的答案嗎？\n此動作無法復原，儲存在這台裝置的所有答案都會被刪除。')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('.student-answer').forEach(el => el.textContent = '');
+  alert('已清空所有答案。');
+}
+
+// 為每題插入學生答案區
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll('.question-card');
+  cards.forEach(card => {
+    const qid = card.id;
+    const qBody = card.querySelector('.question-body');
+    const answerSection = card.querySelector('.answer-section');
+    if (!qBody || !answerSection) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'student-answer-wrap';
+    wrap.innerHTML =
+      '<div class="student-answer-label">' +
+        '<span>📝 我的答案</span>' +
+        '<span class="save-status" id="status-' + qid + '"></span>' +
+      '</div>' +
+      '<div class="student-answer" contenteditable="true" data-qid="' + qid + '" data-placeholder="在此書寫你的答案（會自動儲存到這台裝置）..."></div>';
+
+    card.insertBefore(wrap, answerSection);
+  });
+
+  // 載入既有答案
+  loadAnswers();
+
+  // 自動儲存
+  document.querySelectorAll('.student-answer').forEach(el => {
+    el.addEventListener('input', debounce(function() {
+      saveAnswer(this.dataset.qid, this.textContent);
+      const status = document.getElementById('status-' + this.dataset.qid);
+      if (status) {
+        status.textContent = '✓ 已儲存';
+        setTimeout(() => { status.textContent = ''; }, 1500);
+      }
+    }, 400));
+  });
+
+  // 姓名輸入
+  const nameInput = document.getElementById('studentName');
+  if (nameInput) {
+    nameInput.value = localStorage.getItem(NAME_KEY) || '';
+    nameInput.addEventListener('input', function() {
+      localStorage.setItem(NAME_KEY, this.value);
+    });
+  }
+});
+
+// ==================== PDF 列印 ====================
+function printPDF(mode) {
+  document.body.classList.remove('mode-practice', 'mode-review');
+  document.body.classList.add('mode-' + mode);
+
+  // 列印頁首資訊
+  const name = (document.getElementById('studentName').value || '').trim();
+  const today = new Date();
+  const dateStr = today.getFullYear() + '/' +
+                  String(today.getMonth()+1).padStart(2,'0') + '/' +
+                  String(today.getDate()).padStart(2,'0');
+
+  document.getElementById('printHeaderStudent').textContent = name ? '姓名：' + name : '';
+  document.getElementById('printHeaderMode').textContent = mode === 'review'
+    ? '版本：檢討版（含範答）'
+    : '版本：練習版';
+  document.getElementById('printHeaderDate').textContent = '列印日期：' + dateStr;
+
+  // review 模式：全部展開
+  if (mode === 'review') {
+    document.querySelectorAll('.question-card').forEach(c => c.classList.add('open'));
+  }
+
+  // 讓 DOM 更新後再列印
+  setTimeout(() => {
+    window.print();
+    // 列印結束後還原（部分瀏覽器 onafterprint 才觸發）
+    setTimeout(() => {
+      document.body.classList.remove('mode-practice', 'mode-review');
+    }, 500);
+  }, 150);
+}
+
+// 捕捉列印結束，清除模式 class
+window.addEventListener('afterprint', function() {
+  document.body.classList.remove('mode-practice', 'mode-review');
 });
 </script>
 
